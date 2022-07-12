@@ -25,14 +25,21 @@ function solveEquation(a, b, c) {
     return arr;
 }
 
-solveEquation(1, -4, 4);
 
 
 
-// function calculateTotalMortgage(percent, contribution, amount, date) {
-//   let totalAmount;
 
-//   // код для задачи №2 писать здесь
+function calculateTotalMortgage(percent, contribution, amount, date) {
+  'use strict';
+  let totalAmount;
+  let currentDate = new Date();
+  let creditBody = amount - contribution;
+  let creditPeriod = date - currentDate;
+  let 
+  let mounthlyPayment = creditBody*()
+  
 
-//   return totalAmount;
-// }
+
+
+  return totalAmount;
+}
