@@ -35,10 +35,10 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
   let currentDate = new Date();
   let creditBody = amount - contribution;
   let creditPeriod = date - currentDate;
-  let 
-  let mounthlyPayment = creditBody*()
+  // let percentRatio = 1/12*percent;
+  // let mounthlyPayment = creditBody*(percentRatio + (percentRatio / (1 + percentRatio)**))
   
-
+console.log(creditPeriod)
 
 
   return totalAmount;
