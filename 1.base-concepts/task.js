@@ -31,15 +31,28 @@ function solveEquation(a, b, c) {
 
 function calculateTotalMortgage(percent, contribution, amount, date) {
   'use strict';
-  let totalAmount;
-  let currentDate = new Date();
+
   let creditBody = amount - contribution;
-  let creditPeriod = date - currentDate;
-  // let percentRatio = 1/12*percent;
-  // let mounthlyPayment = creditBody*(percentRatio + (percentRatio / (1 + percentRatio)**))
+
+  let percent1 = percent / 100;
+ 
+  let percentRatio = percent1 / 12;
+
+  let currentDate = new Date();
+
+  let differenceInDate = date.getTime() - currentDate.getTime(); //разница между датами в миллисекундах
   
-console.log(creditPeriod)
+  let month = 1000 * 60 * 60* 24 * 30; //месяц в миллисекундах 
+  
+  let differenceInMonth = differenceInDate / month; //нахождение количества месяцев между датами 
+  let creditPeriod = Math.trunc(differenceInMonth); 
+
+  let mounthlyPayment = creditBody * (percentRatio + (percentRatio / (((1 + percentRatio) **creditPeriod) - 1)));
 
 
+  let totalAmount = mounthlyPayment * creditPeriod;
+  
   return totalAmount;
+
+
 }
