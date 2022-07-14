@@ -32,6 +32,25 @@ function solveEquation(a, b, c) {
 function calculateTotalMortgage(percent, contribution, amount, date) {
   'use strict';
 
+  if (isNaN(percent)) {
+    return (`Параметр "Процентная ставка" содержит неправильное значение "${percent}"`);
+  } else {
+    percent = parseInt(percent);
+  }
+
+  if (isNaN(contribution)) {
+    return (`Параметр "Начальный взнос" содержит неправильное значение "${contribution}"`);
+  } else {
+    contribution = parseInt(contribution);
+  }
+
+  if (isNaN(amount)) {
+    return (`Параметр "Общая стоимость" содержит неправильное значение "${amount}"`);
+  } else {
+    amount = parseInt(amount);
+  }
+
+
   let creditBody = amount - contribution;
 
   let percent1 = percent / 100;
@@ -51,8 +70,10 @@ function calculateTotalMortgage(percent, contribution, amount, date) {
 
 
   let totalAmount = mounthlyPayment * creditPeriod;
-  
-  return totalAmount;
 
+  
+
+
+  return +totalAmount.toFixed(2);
 
 }
