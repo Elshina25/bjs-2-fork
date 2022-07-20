@@ -1,5 +1,4 @@
 function compareArrays(arr1, arr2) {
-  // let result = JSON.stringify(arr1) === JSON.stringify(arr2);
   let result = arr1.length === arr2.length && arr1.every((items, i) => i === arr2.indexOf(items));
   return result;
 }
