@@ -83,7 +83,7 @@ class Library {
     giveBookByName(bookName) {
         let indexBook = this.books.findIndex(book => book.name === bookName);
         if (indexBook >= 0) {
-           return this.books.splice(bookName[indexBook], 1)[0];
+           return this.books.splice([indexBook], 1)[0];
         } else {
             return null;
         }
@@ -91,16 +91,31 @@ class Library {
 }
 
 const library1 = new Library('Библиотека им.А.П.Чехова');
+
 console.log(library1);
 console.log(library1.addBook(new NovelBook('Л.Н.Толстой', 'Война и Мир', 1954, 1270, 80)));
 console.log(library1.addBook(new FantasticBook('Дж.Мартин', 'Песнь льда и пламени', 2016, 960, 90)));
 console.log(library1.addBook(new DetectiveBook('Артур Конан Дойл', 'Приключения Шерлока Холмса', 1994, 2096, 50)));
-console.log(library1.addBook(new NovelBook('Пелам Гренвилл Вудхаус', 'Дева в беде', 1919, 358, 35)));
+console.log(library1.addBook(new NovelBook('Пелам Гренвилл Вудхаус', 'Дева в беде', 1919, 358, 40)));
+
 const searchBook = library1.findBookBy('releaseDate', 1919);
 console.log(searchBook);
+
+console.log("Количество книг до выдачи: " + library1.books.length);
 const deleteBook = library1.giveBookByName('Песнь льда и пламени');
 console.log(deleteBook);
 console.log("Количество книг после выдачи: " + library1.books.length);
 console.log(deleteBook._state = 10);
 console.log(deleteBook.fix());
 console.log(library1.addBook(deleteBook));
+
+const searchBook1 = library1.findBookBy('name', 'Война и Мир');
+console.log(searchBook);
+
+console.log("Количество книг до выдачи: " + library1.books.length);
+const deleteBook1 = library1.giveBookByName('Дева в беде');
+console.log(deleteBook1);
+console.log("Количество книг после выдачи: " + library1.books.length);
+console.log(deleteBook1._state = 30);
+console.log(deleteBook1.fix());
+console.log(library1.addBook(deleteBook1));
