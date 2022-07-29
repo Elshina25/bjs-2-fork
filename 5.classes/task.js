@@ -1,3 +1,5 @@
+//Задача №1
+
 class PrintEditionItem {
     constructor(name, releaseDate, pagesCount, state = 100, type = null) {
         this.name = name;
@@ -59,6 +61,8 @@ class DetectiveBook extends Book {
     }
 }
 
+//Задача №2
+
 class Library {
     constructor(name, books) {
         this.name = name;
@@ -92,30 +96,75 @@ class Library {
 
 const library1 = new Library('Библиотека им.А.П.Чехова');
 
-console.log(library1);
-console.log(library1.addBook(new NovelBook('Л.Н.Толстой', 'Война и Мир', 1954, 1270, 80)));
-console.log(library1.addBook(new FantasticBook('Дж.Мартин', 'Песнь льда и пламени', 2016, 960, 90)));
-console.log(library1.addBook(new DetectiveBook('Артур Конан Дойл', 'Приключения Шерлока Холмса', 1994, 2096, 50)));
-console.log(library1.addBook(new NovelBook('Пелам Гренвилл Вудхаус', 'Дева в беде', 1919, 358, 40)));
+
+library1.addBook(new NovelBook('Л.Н.Толстой', 'Война и Мир', 1954, 1270, 80));
+library1.addBook(new FantasticBook('Дж.Мартин', 'Песнь льда и пламени', 2016, 960, 90));
+library1.addBook(new DetectiveBook('Артур Конан Дойл', 'Приключения Шерлока Холмса', 1994, 2096, 50));
+library1.addBook(new NovelBook('Пелам Гренвилл Вудхаус', 'Дева в беде', 1919, 358, 40));
 
 const searchBook = library1.findBookBy('releaseDate', 1919);
-console.log(searchBook);
 
 console.log("Количество книг до выдачи: " + library1.books.length);
 const deleteBook = library1.giveBookByName('Песнь льда и пламени');
-console.log(deleteBook);
 console.log("Количество книг после выдачи: " + library1.books.length);
-console.log(deleteBook._state = 10);
-console.log(deleteBook.fix());
-console.log(library1.addBook(deleteBook));
+deleteBook._state = 10;
+deleteBook.fix();
+library1.addBook(deleteBook);
 
 const searchBook1 = library1.findBookBy('name', 'Война и Мир');
-console.log(searchBook);
 
 console.log("Количество книг до выдачи: " + library1.books.length);
 const deleteBook1 = library1.giveBookByName('Дева в беде');
-console.log(deleteBook1);
 console.log("Количество книг после выдачи: " + library1.books.length);
-console.log(deleteBook1._state = 30);
-console.log(deleteBook1.fix());
-console.log(library1.addBook(deleteBook1));
+deleteBook1._state = 30;
+deleteBook1.fix();
+library1.addBook(deleteBook1);
+
+//Задача №3
+
+class Student {
+    constructor(name, gender, age, marks) {
+        this.name = name;
+        this.gender = gender;
+        this.age = age;
+        this.marks = {};
+    }
+
+    addMark(mark, subject) {
+        if (this.marks[subject] === undefined) {
+           this.marks[subject] = [mark];
+        } else if (mark < 1 || mark > 5) {
+            return 'Ошибка, оценка должна быть числом от 1 до 5';
+        } else {
+            this.marks[subject].push(mark);
+        }
+    }
+
+    getAverageBySubject(subject) {
+        let marksSubject = this.marks[subject].reduce((acc, mark) => acc + mark, 0);
+        let average = marksSubject/ this.marks[subject].length;
+        return average; 
+    }
+
+    getAverage() {
+       let arrMarks = Object.values(this.marks);;
+       let sumArr = [].concat.apply([], arrMarks);
+       let sumMarks = sumArr.reduce((acc, item) => acc + item, 0);
+       let average = sumMarks / sumArr.length;
+       return average;
+    }
+}
+
+const student = new Student ('Helen Power', 'female', 21);
+student.addMark(5, 'algebra');
+student.addMark(3, 'geometry');
+student.addMark(4, 'biology');
+student.addMark(4, 'algebra');
+student.addMark(5, 'chemistry');
+student.addMark(2, 'foreign language');
+student.addMark(3, 'geometry');
+student.addMark(4, 'biology');
+student.addMark(3, 'chemistry');
+student.addMark(4, 'foreign language');
+student.getAverageBySubject('algebra');
+student.getAverage();
