@@ -26,7 +26,7 @@ class Triangle {
         this.sideB = sideB;
         this.sideC = sideC;
 
-        if (this.sideA + this.sideB < this.sideC || this.sideB + this.sideC < this.sideA || this.sideA + this.sideC < this.sideB) {
+        if (sideA + sideB < sideC || sideB + sideC < sideA || sideA + sideC < sideB) {
             throw new Error('Треугольник с такими сторонами не существует');
         }
     }
