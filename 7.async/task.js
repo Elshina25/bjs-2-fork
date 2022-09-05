@@ -8,32 +8,24 @@ class AlarmClock {
         if (id == null) {
             throw new Error('ID не найден!');
         }
-        let isAlarm = this.alarmCollection.findIndex((alarm) => {
-            return alarm.id === id;
-        });
-        if (isAlarm !== -1) {
+        let isAlarm = this.alarmCollection.some(alarm => alarm.id === id);
+        if (isAlarm) {
             console.error('Такой ID уже существует!');
-            return this;
+            return;
         }
         let alarmObj = {
-            time: time,
-            callback: callback,
-            id: id,
+            time,
+            callback,
+            id,
         }
         this.alarmCollection.push(alarmObj);
     }
 
     removeClock(id) {
-        let alarmArr = this.alarmCollection.filter(function(alarm) {
-            return alarm.id !== id;
-        });
-       this.alarmCollection = alarmArr;
-       if (this.alarmCollection.some(alarm => alarm.id === id)) {
-            return false;
-       } else {
-        return true;
-       }
-
+        const alarmLength = this.alarmCollection.length;
+        const alarmFilter = this.alarmCollection.filter(alarm => alarm.id !== id);
+        this.alarmCollection = alarmFilter;
+        return alarmLength != alarmFilter.length;
     }
 
     getCurrentFormattedTime() {
@@ -41,15 +33,10 @@ class AlarmClock {
     }
 
     start() {
-        function checkClock(alarm) {
-            if (alarm.time === this.getCurrentFormattedTime()) {
-                return this.alarmCollection.callback();
-            }
-        }
+        const checkClock = (alarm) => (alarm.time === this.getCurrentFormattedTime());
         
         if (this.timerId === null) {
-            this.timerId = 1;
-            this.timerId = setInterval(() => checkClock, 1000);
+            this.timerId = setInterval(this.alarmCollection.forEach((alarm) => checkClock, 1000));
         }
     }
       
@@ -66,7 +53,7 @@ class AlarmClock {
     }
 
     clearAlarms() {
-        clearInterval(this.timerId);
+        this.stop();
         this.alarmCollection = [];
     }
 }
@@ -76,9 +63,9 @@ class AlarmClock {
 function testCase() {
     const alarm = new AlarmClock();
     alarm.addClock('08:00', () => console.log('Подъем на работу!'), 1);
-    alarm.addClock('08:01', () => {console.log('Вставай давай!'); alarm.removeClock(2)}, 2);
+    alarm.addClock('08:01', () => console.log('Вставай давай!'), 2);
     alarm.addClock('08:02', () => console.log('ВСТАВААААЙ! А то уволят)'), 1);
-    // alarm.addClock('08:03', () => console.log('Это перебор! Тебе так не кажется?'));
+    alarm.removeClock(2);
     alarm.printAlarms();
     alarm.start();
     alarm.stop();

@@ -1,0 +1,10 @@
+const alarm = new AlarmClock();
+    alarm.addClock('08:00', () => console.log('Подъем на работу!'), 1);
+    alarm.addClock('08:01', () => {console.log('Вставай давай!'); alarm.removeClock(2)}, 2);
+    alarm.addClock('08:02', () => console.log('ВСТАВААААЙ! А то уволят)'), 1);
+    alarm.removeClock(1);
+    alarm.printAlarms();
+    alarm.start();
+    alarm.stop();
+    alarm.clearAlarms();
+    alarm.printAlarms();
