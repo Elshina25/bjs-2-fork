@@ -1,19 +1,27 @@
 function cachingDecoratorNew(func) {
-  let cache = {};
-  return function(...args) {
-    const hash = args.join(',');
-    if (hash in cache) {
-      return cache[hash];
+  let cache = [];
+ 
+ 
+  function wrapper (...args) {
+    let obj = {hash: args.join(), value: func(...args)};
+    const objInCache = cache.find(item => item.hash === obj.hash);
+  
+    if (objInCache) {
+        console.log(`Из кэша: ${obj.value}}`);
+        return `Из кэша: ${obj.value}`;
+    } 
+    
+    const result = func.call(this, ...args);
+    cache.push(obj);
+
+    if (cache.length > 5) {
+      cache.shift();
     }
+    console.log(`Вычисляем: ${result}`);
+    return `Вычисляем: ${result}`;
+  } return wrapper;
+} 
 
-    const result = func.call(cache, ...args);
-    cache[hash] = result;
-    return result;
-  } 
-}
-
-add2 = (a, b) => a + b;
-upgAdd2 = cachingDecoratorNew(add2);
 
 addThree = (a, b, c) => a + b + c;
 upgradedAddThree = cachingDecoratorNew(addThree);

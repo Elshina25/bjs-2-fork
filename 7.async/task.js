@@ -33,18 +33,15 @@ class AlarmClock {
     }
 
     start() {
-        const date = this.getCurrentFormattedTime();
         function checkClock(alarm) {
-            if (alarm.time === date) {
-              alarm.callback();
+            if (alarm.time == getCurrentFormattedTime()) {
+                alarm.callback();
             }
         }
         const bindedCheckClock = checkClock.bind(this);
         
         if (this.timerId === null) {
-            this.timerId = setInterval(() => {
-                this.alarmCollection.forEach(alarm => checkClock(alarm))
-            }, 1000);
+            this.timerId = setInterval(() => this.alarmCollection.forEach(alarm => bindedCheckClock(alarm)), 1000);
         }
     }
       
@@ -71,10 +68,10 @@ class AlarmClock {
 function testCase() {
     const alarm = new AlarmClock();
     alarm.addClock('08:00', () => console.log('Подъем на работу!'), 1);
-    alarm.addClock('08:06', () => console.log('Вставай давай!'), 2);
-    alarm.addClock('08:07', () => console.log('Вставай давай!'), 3);
-    alarm.addClock('08:08', () => console.log('Вставай давай!'), 4);
-    alarm.addClock('08:02', () => console.log('ВСТАВААААЙ! А то уволят)'), 1);
+    alarm.addClock('08:01', () => console.log('Вставай давай!'), 2);
+    alarm.addClock('08:02', () => console.log('Вставай давай!'), 3);
+    alarm.addClock('08:03', () => console.log('Вставай давай!'), 4);
+    alarm.addClock('08:04', () => console.log('ВСТАВААААЙ! А то уволят)'), 1);
     alarm.removeClock(1);
     alarm.printAlarms();
     alarm.start();
