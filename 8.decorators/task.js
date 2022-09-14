@@ -7,7 +7,7 @@ function cachingDecoratorNew(func) {
     const objInCache = cache.find(item => item.hash === obj.hash);
   
     if (objInCache) {
-        console.log(`Из кэша: ${obj.value}}`);
+        console.log(`Из кэша: ${obj.value}`);
         return `Из кэша: ${obj.value}`;
     } 
     
@@ -22,15 +22,30 @@ function cachingDecoratorNew(func) {
   } return wrapper;
 } 
 
+function debounceDecoratorNew(func, delay) {
+  let flag = true;
+  let timeOut = null;
+  wrapper.count = 0;
+  wrapper.allCount = 0;
+  function wrapper(...args) {
+    if (flag) {
+      func(...args);
+      wrapper.count++;
+      flag = false;
+    }
 
-addThree = (a, b, c) => a + b + c;
-upgradedAddThree = cachingDecoratorNew(addThree);
-
-
-function debounceDecoratorNew(func) {
-  // Ваш код
+    if (timeOut === null) {
+      timeOut = setTimeout(() => {
+        func(...args);
+        wrapper.count++;
+      }, delay);
+      
+    } else {
+      clearTimeout(timeOut);
+      timeOut = null;
+    }
+    wrapper.allCount += wrapper.count;
+  } return wrapper;
 }
 
-function debounceDecorator2(func) {
-  // Ваш код
-}
+

@@ -67,14 +67,12 @@ class AlarmClock {
 
 function testCase() {
     const alarm = new AlarmClock();
-    alarm.addClock('08:00', () => console.log('Подъем на работу!'), 1);
-    alarm.addClock('08:01', () => console.log('Вставай давай!'), 2);
-    alarm.addClock('08:02', () => console.log('Вставай давай!'), 3);
-    alarm.addClock('08:03', () => console.log('Вставай давай!'), 4);
+    alarm.addClock('08:00', () => {console.log('Подъем на работу!'); alarm.start() }, 1);
+    alarm.addClock('17:45', () => {console.log('Вставай давай!'); alarm.start(), alarm.removeClock(2)}, 2);
+    alarm.addClock('17:46', () => {console.log('Вставай давай!'); alarm.start()}, 3);
+    alarm.addClock('17:47', () => {console.log('Вставай давай!'); alarm.start()}, 4);
     alarm.addClock('08:04', () => console.log('ВСТАВААААЙ! А то уволят)'), 1);
-    alarm.removeClock(1);
     alarm.printAlarms();
-    alarm.start();
     alarm.stop();
     alarm.clearAlarms();
     alarm.printAlarms();
