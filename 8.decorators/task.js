@@ -1,19 +1,14 @@
 function cachingDecoratorNew(func) {
   let cache = [];
- 
- 
   function wrapper (...args) {
     let obj = {hash: args.join(), value: func(...args)};
     const objInCache = cache.find(item => item.hash === obj.hash);
-  
     if (objInCache) {
         console.log(`Из кэша: ${obj.value}`);
         return `Из кэша: ${obj.value}`;
     } 
-    
     const result = func.call(this, ...args);
     cache.push(obj);
-
     if (cache.length > 5) {
       cache.shift();
     }
@@ -33,13 +28,11 @@ function debounceDecoratorNew(func, delay) {
       wrapper.count++;
       flag = false;
     }
-
     if (timeOut === null) {
       timeOut = setTimeout(() => {
         func(...args);
         wrapper.count++;
       }, delay);
-      
     } else {
       clearTimeout(timeOut);
       timeOut = null;
