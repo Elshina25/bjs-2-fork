@@ -20,15 +20,13 @@ function cachingDecoratorNew(func) {
 } 
 
 function debounceDecoratorNew(func, delay) {
-  let flag = true;
   let intervalId;
   wrapper.count = 0;
   wrapper.allCount = 0;
   function wrapper(...args) {
-    if (flag) {
+    if (!intervalId) {
       func(...args);
       wrapper.count++;
-      flag = false;
     }
     clearInterval(intervalId);
     intervalId = setInterval(() => {
